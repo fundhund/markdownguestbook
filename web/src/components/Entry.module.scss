@@ -1,0 +1,51 @@
+@import '../scss/colors.scss';
+
+.entry {
+    border: 1px solid $color_darkBlue;
+    border-radius: 5px;
+    max-width: 750px;
+    margin: 0 auto 20px;
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        background-color: $color_darkBlue;
+        color: $color_white;
+
+        * {
+            padding: 10px;
+        }
+
+        .id {
+            border-right: 1px solid $color_white;
+        }
+
+        .timestamp {
+            border-left: 1px solid $color_white;
+            margin-left: auto;
+        }
+    }
+
+    .body, .footer {
+        padding: 10px;
+    }
+
+    .footer {
+        
+        .icons {
+            color: $color_darkBlue;
+            font-size: 1.25em;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+
+            > * {
+                cursor: pointer;
+
+                &:not(:first-child) {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}

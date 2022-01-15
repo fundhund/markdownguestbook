@@ -1,0 +1,77 @@
+@import '../scss/colors.scss';
+
+.entryForm {
+    margin: 0 auto 40px;
+    max-width: 400px;
+    font-size: 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    .toggleForm {
+        display: flex;
+        justify-content: center;
+        margin: 20Px;
+    }
+
+    .formWrapper {
+
+        padding: 20px;
+
+        .formRow {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+
+            label {
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+
+            input, textarea {
+                border-radius: 5px;
+                border: 1px solid $color_darkBlue;
+                font-size: 16px;
+                font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+                monospace;
+                outline: none;
+            }
+
+            input {
+                height: 30px;
+            }
+
+            textarea {
+                min-height: 100px;
+            }
+        }
+
+        .buttonSection {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+
+            :not(:first-child) {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .error {
+        background-color: $color_darkRed;
+        text-align: center;
+        color: $color_white;
+        margin: 20px 0;
+        border-radius: 5px;
+        padding: 8px;
+    }
+
+    .success {
+        text-align: center;
+        font-size: 1.25em;
+        font-weight: 600;
+        color: $color_darkGreen;
+        margin: 20px 0;
+        padding: 8px;
+    }
+}

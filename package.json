@@ -1,0 +1,22 @@
+{
+  "name": "guestbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd web && npm run start\" \"cd backend && nodemon index.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fundhund/guestbook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fundhund/guestbook/issues"
+  },
+  "homepage": "https://github.com/fundhund/guestbook#readme",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
