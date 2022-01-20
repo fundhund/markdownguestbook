@@ -1,7 +1,7 @@
 import { RiDeleteBin6Line, RiDoubleQuotesR } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteEntry } from '../lib/crud'
-import { updateEntries, updateMessage } from '../redux/actions'
+import { fetchEntries, showForm, updateMessage } from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import { EntryData } from '../types/EntryData'
 import styles from './Entry.module.scss'
@@ -40,11 +40,12 @@ const Entry = ({entryData}: Props) => {
     const handleQuote = () => {
         const newMessageInForm = `_${message}_\n\n${messageInForm}`
         dispatch(updateMessage(newMessageInForm))
+        dispatch(showForm(true))
     }
 
     const handleDelete = async () => {
         await deleteEntry(id)
-        dispatch(await updateEntries())
+        await fetchEntries(dispatch)
     }
 
     return (

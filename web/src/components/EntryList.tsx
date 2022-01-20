@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateEntries } from '../redux/actions'
+import { fetchEntries } from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import { EntryData } from '../types/EntryData'
 import Entry from './Entry'
@@ -13,14 +13,7 @@ const Entries = () => {
     const entries: EntryData[] = useSelector((state: RootState) => state.entries)
 
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        const renderEntries = async () => {
-            dispatch(await updateEntries())
-        }
-
-        renderEntries()
-    }, [dispatch])
+    useEffect(() => { fetchEntries(dispatch) }, [dispatch])
 
     return (
         <div className={styles.entryList}>

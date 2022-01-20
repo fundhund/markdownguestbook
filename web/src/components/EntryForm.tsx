@@ -1,33 +1,33 @@
-import axios from 'axios'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { postEntry } from '../lib/crud'
-import { clearForm, updateEntries, updateMessage, updateName } from '../redux/actions'
+import {
+    clearForm,
+    fetchEntries,
+    showForm,
+    updateMessage,
+    updateName
+} from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import Button from './Button'
 import styles from './EntryForm.module.scss'
 
-type Props = {
-    showForm: boolean,
-    setShowForm: Dispatch<SetStateAction<boolean>>,
-}
-
-const EntryForm = ({showForm, setShowForm}: Props) => {
+const EntryForm = () => {
 
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<boolean | null>(null)
 
-    const {name, message} = useSelector((state: RootState) => state.form)
+    const {name, message, isFormVisible} = useSelector((state: RootState) => state.form)
 
     const dispatch = useDispatch()
 
     const submit = async () => {
         try {
-            postEntry(name, message)
+            await postEntry(name, message)
 
-            setShowForm(false)
+            dispatch(showForm(false))
             setSuccess(true)
-            dispatch(await updateEntries())
+            await fetchEntries(dispatch)
             dispatch(clearForm())
 
         } catch (err) {
@@ -41,13 +41,13 @@ const EntryForm = ({showForm, setShowForm}: Props) => {
 
     return (
         <div className={styles.entryForm}>
-            {!showForm && 
+            {!isFormVisible && 
                 <>
                     <div className={styles.toggleForm}>
                         <Button
                             text="New message"
                             onclick={() => {
-                                setShowForm(true)
+                                dispatch(showForm(true))
                                 setSuccess(null)
                             }}
                             color="blue"
@@ -57,7 +57,7 @@ const EntryForm = ({showForm, setShowForm}: Props) => {
                 </>
             }
 
-            {showForm && (
+            {isFormVisible && (
                 <div className={styles.formWrapper}>
 
                     <div className={styles.formRow}>
@@ -84,7 +84,7 @@ const EntryForm = ({showForm, setShowForm}: Props) => {
                     <div className={styles.buttonSection}>
                         <Button
                             text="Cancel"
-                            onclick={() => setShowForm(false)}
+                            onclick={() => dispatch(showForm(false))}
                             color="red"
                         />
                         <Button

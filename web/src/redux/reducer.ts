@@ -7,7 +7,7 @@ type EntriesAction = {
 }
 
 type FormAction = {
-    type: 'UPDATE_NAME' | 'UPDATE_MESSAGE' | 'CLEAR_FORM',
+    type: 'UPDATE_NAME' | 'UPDATE_MESSAGE' | 'CLEAR_FORM' | 'SHOW_FORM',
     payload: string | null,
 }
 
@@ -20,7 +20,13 @@ const entriesReducer = (state = [], action: EntriesAction) => {
     }
 }
 
-const formReducer = (state = {name: '', message: ''}, action: FormAction) => {
+const defaultFormState = {
+    name: '',
+    message: '',
+    isFormVisible: false,
+}
+
+const formReducer = (state = defaultFormState, action: FormAction) => {
     switch (action.type) {
         case 'UPDATE_NAME':
             return {
@@ -34,8 +40,14 @@ const formReducer = (state = {name: '', message: ''}, action: FormAction) => {
             }
         case 'CLEAR_FORM':
             return {
+                ...state,
                 name: '',
                 message: '',
+            }
+        case 'SHOW_FORM':
+            return {
+                ...state,
+                isFormVisible: action?.payload,
             }
         default:
             return state
