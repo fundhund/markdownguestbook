@@ -84,7 +84,10 @@ const EntryForm = () => {
                     <div className={styles.buttonSection}>
                         <Button
                             text="Cancel"
-                            onclick={() => dispatch(showForm(false))}
+                            onclick={() => {
+                                dispatch(showForm(false))
+                                dispatch(clearForm())
+                            }}
                             color="red"
                         />
                         <Button

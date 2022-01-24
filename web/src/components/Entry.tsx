@@ -1,6 +1,7 @@
 import { RiDeleteBin6Line, RiDoubleQuotesR } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteEntry } from '../lib/crud'
+import { markupToHtml } from '../lib/messageHelper'
 import { fetchEntries, showForm, updateMessage } from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import { EntryData } from '../types/EntryData'
@@ -28,7 +29,7 @@ const Entry = ({entryData}: Props) => {
         ip,
     } = entryData
 
-    const displayedTime = new Date(timestamp).toLocaleDateString(undefined, {
+    const displayedTime = new Date(timestamp).toLocaleDateString('en', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -38,7 +39,7 @@ const Entry = ({entryData}: Props) => {
     })
 
     const handleQuote = () => {
-        const newMessageInForm = `_${message}_\n\n${messageInForm}`
+        const newMessageInForm = `__${name} wrote:__ _${message}_\n\n${messageInForm}`
         dispatch(updateMessage(newMessageInForm))
         dispatch(showForm(true))
     }
@@ -55,9 +56,10 @@ const Entry = ({entryData}: Props) => {
                 <div className={styles.name}>{name}</div>
                 <div className={styles.timestamp}>{displayedTime}</div>
             </div>
-            <div className={styles.body}>
-                {message}
-            </div>
+            <div 
+                className={styles.body}
+                dangerouslySetInnerHTML={{__html: markupToHtml(message)}}
+            />
             <div className={styles.footer}>
                 <div className={styles.icons}>
                     <RiDoubleQuotesR onClick={handleQuote} />
