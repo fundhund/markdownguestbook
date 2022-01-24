@@ -1,0 +1,22 @@
+.icons {
+    margin: 0 auto;
+    padding: 20px;
+    
+    .header {
+        margin: 0 0 20px;
+    }
+    
+    .iconList {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+
+        * {
+            max-height: 50px;
+
+            &:not(:first-child) {
+                margin-left: 30px;
+            }
+        }
+    }
+}
