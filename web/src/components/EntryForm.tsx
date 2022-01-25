@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { postEntry } from '../lib/crud'
 import {
+    addOwnEntry,
     clearForm,
     fetchEntries,
     showForm,
@@ -23,9 +24,12 @@ const EntryForm = () => {
 
     const submit = async () => {
         try {
-            await postEntry(name, message)
+            const { id } = await postEntry(name, message)
 
             dispatch(showForm(false))
+            if (id !== undefined) {
+                dispatch(addOwnEntry(id))
+            }
             setSuccess(true)
             await fetchEntries(dispatch)
             dispatch(clearForm())

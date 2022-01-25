@@ -40,3 +40,8 @@ export const showForm = (isFormVisible: boolean) => ({
     type: 'SHOW_FORM',
     payload: isFormVisible,
 })
+
+export const addOwnEntry = (id: string) => ({
+    type: 'ADD_OWN_ENTRY_ID',
+    payload: id,
+})

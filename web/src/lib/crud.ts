@@ -17,11 +17,12 @@ export const getEntries = async (): Promise<EntryData[] | undefined> => {
     }))
 }
 
-export const postEntry = async (name: string, message: string): Promise<void> => {
-    await axios.post(URLS.ENTRIES, {
+export const postEntry = async (name: string, message: string): Promise<Partial<EntryData>> => {
+    const { data } = await axios.post(URLS.ENTRIES, {
         name,
         message,
     })
+    return data
 }
 
 export const deleteEntry = async (id: string): Promise<void> => {

@@ -31,6 +31,12 @@
     }
 
     .footer {
+        display: flex;
+        justify-content: space-between;
+
+        .ip {
+            font-size: 0.75em;
+        }
         
         .icons {
             color: $color_darkBlue;

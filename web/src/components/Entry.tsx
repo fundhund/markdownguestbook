@@ -1,7 +1,7 @@
 import { RiDeleteBin6Line, RiDoubleQuotesR } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteEntry } from '../lib/crud'
-import { markupToHtml } from '../lib/messageHelper'
+import { markupToHtml, removeMarkup } from '../lib/messageHelper'
 import { fetchEntries, showForm, updateMessage } from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import { EntryData } from '../types/EntryData'
@@ -13,7 +13,8 @@ type Props = {
 
 const Entry = ({entryData}: Props) => {
 
-    const {message: messageInForm} = useSelector((state: RootState) => state.form)
+    const { message: messageInForm } = useSelector((state: RootState) => state.form)
+    const { ownEntries } = useSelector((state: RootState) => state.user)
 
     const dispatch = useDispatch()
 
@@ -39,7 +40,7 @@ const Entry = ({entryData}: Props) => {
     })
 
     const handleQuote = () => {
-        const newMessageInForm = `__${name} wrote:__ _${message}_\n\n${messageInForm}`
+        const newMessageInForm = `---__${name} wrote:__ _${removeMarkup(message)}_---\n\n${messageInForm}`
         dispatch(updateMessage(newMessageInForm))
         dispatch(showForm(true))
     }
@@ -61,9 +62,10 @@ const Entry = ({entryData}: Props) => {
                 dangerouslySetInnerHTML={{__html: markupToHtml(message)}}
             />
             <div className={styles.footer}>
+                <div className={styles.ip}>IP: {ip}</div>
                 <div className={styles.icons}>
                     <RiDoubleQuotesR onClick={handleQuote} />
-                    <RiDeleteBin6Line  onClick={handleDelete} />
+                    { ownEntries.includes(id) && <RiDeleteBin6Line onClick={handleDelete} /> }
                 </div>
             </div>
         </div>
