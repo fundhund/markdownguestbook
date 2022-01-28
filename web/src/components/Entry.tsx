@@ -40,9 +40,10 @@ const Entry = ({entryData}: Props) => {
     })
 
     const handleQuote = () => {
-        const newMessageInForm = `---__${name} wrote:__ _${removeMarkup(message)}_---\n\n${messageInForm}`
+        const newMessageInForm = `>_${removeMarkup(message)}_\n${messageInForm}`
         dispatch(updateMessage(newMessageInForm))
         dispatch(showForm(true))
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     const handleDelete = async () => {
