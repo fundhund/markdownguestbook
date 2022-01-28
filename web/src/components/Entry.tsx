@@ -1,7 +1,7 @@
 import { RiDeleteBin6Line, RiDoubleQuotesR } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteEntry } from '../lib/crud'
-import { markupToHtml, removeMarkup } from '../lib/messageHelper'
+import { markdownToHtml, removeMarkdown } from '../lib/markdownHelper'
 import { fetchEntries, showForm, updateMessage } from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import { EntryData } from '../types/EntryData'
@@ -40,7 +40,7 @@ const Entry = ({entryData}: Props) => {
     })
 
     const handleQuote = () => {
-        const newMessageInForm = `>_${removeMarkup(message)}_\n${messageInForm}`
+        const newMessageInForm = `>_${removeMarkdown(message)}_\n${messageInForm}`
         dispatch(updateMessage(newMessageInForm))
         dispatch(showForm(true))
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -60,7 +60,7 @@ const Entry = ({entryData}: Props) => {
             </div>
             <div 
                 className={styles.body}
-                dangerouslySetInnerHTML={{__html: markupToHtml(message)}}
+                dangerouslySetInnerHTML={{__html: markdownToHtml(message)}}
             />
             <div className={styles.footer}>
                 <div className={styles.ip}>IP: {ip}</div>
