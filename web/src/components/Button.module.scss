@@ -8,20 +8,32 @@
     padding: 8px 16px;
     border-radius: 5px;
     border: none;
-    
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
     &.blue {
         background-color: $color_darkBlue;
 
-        &:hover {
-            background-color: $color_brightBlue;
+        &:disabled {
+            background-color: $color_veryLightBlue;
+        }
+
+        &:hover:not(:disabled) {
+            background-color: $color_lightBlue;
         }
     }
 
     &.red {
         background-color: $color_darkRed;
+
+        &:disabled {
+            background-color: $color_veryLightRed;
+        }
         
-        &:hover {
-            background-color: $color_brightRed;
+        &:hover:not(:disabled) {
+            background-color: $color_lightRed;
         }
     }
 }

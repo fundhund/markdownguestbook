@@ -98,6 +98,7 @@ const EntryForm = () => {
                             text="Submit"
                             onclick={() => submit()}
                             color="blue"
+                            disabled={message === ''}
                         />
                     </div>
                     {error && (<div className={styles.error}>{error}</div>)}
