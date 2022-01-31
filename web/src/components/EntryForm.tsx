@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { postEntry } from '../lib/crud'
 import {
     addOwnEntry,
     clearForm,
-    fetchEntries,
-    showForm,
+    fetchEntries, showForm,
     updateMessage,
     updateName
 } from '../redux/actions'
@@ -17,8 +16,20 @@ const EntryForm = () => {
 
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<boolean | null>(null)
+    const [isSubmitDisabled, setisSubmitDisabled] = useState<boolean>(true)
 
     const {name, message, isFormVisible} = useSelector((state: RootState) => state.form)
+    const { ownEntries } = useSelector((state: RootState) => state.user)
+
+    useEffect(() => {
+        if (name === '' || message === '') {
+            setisSubmitDisabled(true)
+        } else {
+            // the more entries have been created in this session, the longer the submit button remains disabled.
+            const delay = Math.pow(2, ownEntries.length) * 1000
+            setTimeout(() => { setisSubmitDisabled(false) }, delay)
+        }
+    }, [name, message, ownEntries])
 
     const dispatch = useDispatch()
 
@@ -98,7 +109,7 @@ const EntryForm = () => {
                             text="Submit"
                             onclick={() => submit()}
                             color="blue"
-                            disabled={message === ''}
+                            disabled={isSubmitDisabled}
                         />
                     </div>
                     {error && (<div className={styles.error}>{error}</div>)}
