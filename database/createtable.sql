@@ -7,6 +7,5 @@ CREATE TABLE entry (
 	name varchar(50) NOT NULL,
 	message text NOT NULL,
 	created timestamp NOT NULL DEFAULT NOW(),
-	ip inet,
 	CONSTRAINT entry_id_key PRIMARY KEY (entry_id)
 );

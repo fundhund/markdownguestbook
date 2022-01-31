@@ -19,22 +19,18 @@
         .id {
             border-right: 1px solid $color_white;
         }
-
-        .timestamp {
-            border-left: 1px solid $color_white;
-            margin-left: auto;
-        }
     }
 
-    .body, .footer {
-        padding: 10px;
+    .body {
+        padding: 20px 10px;
     }
 
     .footer {
         display: flex;
+        padding: 10px;
         justify-content: space-between;
 
-        .ip {
+        .timestamp {
             font-size: 0.75em;
         }
         

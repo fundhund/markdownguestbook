@@ -41,10 +41,9 @@ const postEntry = async (req, res) => {
             return
         }
 
-        const ip = req?.headers['x-forwarded-for'] || req?.socket?.remoteAddress
-        const result = await pool.query(`INSERT INTO entry (name, message, ip) VALUES ('${name}', '${message}', '${ip}') RETURNING entry_id`)
+        const result = await pool.query(`INSERT INTO entry (name, message) VALUES ('${name}', '${message}') RETURNING entry_id`)
         const id = result.rows[0]['entry_id']
-        res.status(200).json({name, message, ip, id})
+        res.status(200).json({name, message, id})
 	} catch (err) {
 		console.error(err.message)
 	}

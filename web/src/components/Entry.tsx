@@ -27,7 +27,6 @@ const Entry = ({entryData}: Props) => {
         name,
         message,
         timestamp,
-        ip,
     } = entryData
 
     const displayedTime = new Date(timestamp).toLocaleDateString('en', {
@@ -56,14 +55,13 @@ const Entry = ({entryData}: Props) => {
             <div className={styles.header}>
                 <div className={styles.id}>{id}</div>
                 <div className={styles.name}>{name}</div>
-                <div className={styles.timestamp}>{displayedTime}</div>
             </div>
             <div 
                 className={styles.body}
                 dangerouslySetInnerHTML={{__html: markdownToHtml(message)}}
             />
             <div className={styles.footer}>
-                <div className={styles.ip}>IP: {ip}</div>
+                <div className={styles.timestamp}>{displayedTime}</div>
                 <div className={styles.icons}>
                     <RiDoubleQuotesR onClick={handleQuote} />
                     { ownEntries.includes(id) && <RiDeleteBin6Line onClick={handleDelete} /> }
