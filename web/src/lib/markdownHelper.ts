@@ -2,14 +2,29 @@ class MarkdownObject {
     constructor(private text: string) {}
 
     private parseBlockquote() {
-        this.text = this.text
-            .replace(/(?<!\\)>([^\n]*)$/gm, '<p style="border-left: 3px solid lightgray; padding-left: 10px;">$1</p>')
-            .replace(/\\>/g, '>')
+        const attributes = 'style="border-left: 3px solid lightgray; padding-left: 10px; margin: 0;"'
+
+        let pattern = '(?<!\\\\)>([^\\n]*)'
+        let replacement = `<blockquote ${attributes}>$1</blockquote>`
+        let re = new RegExp(pattern, 'gm')
+
+        while (this.text.match(re)) {
+            this.text = this.text.replace(re, replacement)
+            pattern = `<blockquote [^>]*>${pattern}<\\/blockquote>`
+            replacement = `<blockquote ${attributes}>${replacement}</blockquote>`
+            re = new RegExp(pattern, 'gm')
+        }
+
+        this.text = this.text.replace(/<\/blockquote>\n*<blockquote/g, '</blockquote><blockquote')
+
         return this
     }
 
     private parseHorizontalRule() {
-        this.text = this.text.replace(/---/g, '<hr />')
+        this.text = this.text
+            .replace(/---/g, '<hr />')
+            .replace(/\*\*\*/g, '<hr />')
+            .replace(/___/g, '<hr />')
         return this
     }
 
@@ -40,7 +55,10 @@ class MarkdownObject {
         this.text = this.text
             .replace(/(?<!\\)__(.*?)(?<!\\)__/gm, '<strong>$1</strong>')
             .replace(/(?<!\\)_(.*?)(?<!\\)_/gm, '<em>$1</em>')
+            .replace(/(?<!\\)\*\*(.*?)(?<!\\)\*\*/gm, '<strong>$1</strong>')
+            .replace(/(?<!\\)\*(.*?)(?<!\\)\*/gm, '<em>$1</em>')
             .replace(/\\_/g, '_')
+            .replace(/\\\*/g, '*')
         return this
     }
 
@@ -54,6 +72,14 @@ class MarkdownObject {
         this.text = this.text.replace(/\n/g, '<br />')
         return this
     }
+
+    /* TODO:
+        parseSuperscript
+        parseSubscript
+        parseStrikeThrough
+        parseLink
+        parseImage
+    */
 
     public getHtml() {
         return this
