@@ -73,10 +73,22 @@ class MarkdownObject {
         return this
     }
 
+    private parseStrikethrough() {
+        this.text = this.text.replace(/~~([^~]*)~~/gm, '<s>$1</s>')
+        return this
+    }
+
+    private parseSubscript() {
+        this.text = this.text.replace(/~([^~]*)~/gm, '<sub>$1</sub>')
+        return this
+    }
+
+    private parseSuperscript() {
+        this.text = this.text.replace(/\^([^^]*)\^/gm, '<sup>$1</sup>')
+        return this
+    }
+
     /* TODO:
-        parseSuperscript
-        parseSubscript
-        parseStrikeThrough
         parseLink
         parseImage
     */
@@ -90,6 +102,9 @@ class MarkdownObject {
             .parseBoldAndItalic()
             .parseCode()
             .parseNewLine()
+            .parseStrikethrough()
+            .parseSubscript()
+            .parseSuperscript()
             .text
     }
 }

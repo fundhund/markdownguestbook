@@ -153,3 +153,38 @@ test('parses nested blockquote', () => {
     expect(actual).toBe(expected)
 })
 
+test('parses unordered list', () => {
+    const expected = '<ul><li>one</li><li>two</li><li>three</li></ul>'
+    const actual = markdownToHtml('- one\n- two\n- three')
+    expect(actual).toBe(expected)
+})
+
+test('parses ordered list', () => {
+    const expected = '<ol><li value="1">one</li><li value="2">two</li><li value="3">three</li></ol>'
+    const actual = markdownToHtml('1. one\n2. two\n3. three')
+    expect(actual).toBe(expected)
+})
+
+test('parses ordered with custom values', () => {
+    const expected = '<ol><li value="13">one</li><li value="15">two</li><li value="17">three</li></ol>'
+    const actual = markdownToHtml('13. one\n15. two\n17. three')
+    expect(actual).toBe(expected)
+})
+
+test('parses strikethrough', () => {
+    const expected = '<s>one</s> two'
+    const actual = markdownToHtml('~~one~~ two')
+    expect(actual).toBe(expected)
+})
+
+test('parses superscript', () => {
+    const expected = 'x<sup>2</sup>'
+    const actual = markdownToHtml('x^2^')
+    expect(actual).toBe(expected)
+})
+
+test('parses subscript', () => {
+    const expected = 'H<sub>2</sub>O'
+    const actual = markdownToHtml('H~2~O')
+    expect(actual).toBe(expected)
+})
