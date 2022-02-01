@@ -95,6 +95,11 @@ class MarkdownObject {
         return this
     }
 
+    private parseLink() {
+        this.text = this.text.replace(/\[([^\]\n]*)\]\(([^)\n]*)\)/g, '<a href="$2" target="_blank">$1</a>')
+        return this
+    }
+
     /* TODO:
         parseLink
         parseImage
@@ -113,6 +118,7 @@ class MarkdownObject {
             .parseSubscript()
             .parseSuperscript()
             .parseEscapeCharacters()
+            .parseLink()
             .text
     }
 }

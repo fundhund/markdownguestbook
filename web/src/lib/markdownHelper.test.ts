@@ -188,3 +188,9 @@ test('parses subscript', () => {
     const actual = markdownToHtml('H~2~O')
     expect(actual).toBe(expected)
 })
+
+test('parses link', () => {
+    const expected = '<a href="http://www.example.com" target="_blank">title</a>'
+    const actual = markdownToHtml('[title](http://www.example.com)')
+    expect(actual).toBe(expected)
+})

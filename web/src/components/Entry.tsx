@@ -60,7 +60,6 @@ const Entry = ({entryData}: Props) => {
                 className={styles.body}
                 dangerouslySetInnerHTML={{__html: markdownToHtml(message)}}
             />
-            <div>{message.replace(/\n/g, 'ä')}</div>
             <div className={styles.footer}>
                 <div className={styles.timestamp}>{displayedTime}</div>
                 <div className={styles.icons}>
