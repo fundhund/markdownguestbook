@@ -6,6 +6,10 @@
     max-width: 750px;
     margin: 0 auto 20px;
 
+    ol, ul {
+        margin: 0;
+    }
+
     .header {
         display: flex;
         flex-direction: row;

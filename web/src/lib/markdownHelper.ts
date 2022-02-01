@@ -4,7 +4,8 @@ class MarkdownObject {
     private parseBlockquote() {
         const attributes = 'style="border-left: 3px solid lightgray; padding-left: 10px; margin: 0;"'
 
-        let pattern = '(?<!\\\\)>([^\\n]*)'
+        // let pattern = '(?<!\\\\)>([^\\n]*)'
+        let pattern = '(?<!<[^>]*[^>]|\\\\)>([^\\n]*)'
         let replacement = `<blockquote ${attributes}>$1</blockquote>`
         let re = new RegExp(pattern, 'gm')
 
@@ -88,6 +89,12 @@ class MarkdownObject {
         return this
     }
 
+    private parseEscapeCharacters() {
+        this.text = this.text
+            .replace(/\\>/g, '>')
+        return this
+    }
+
     /* TODO:
         parseLink
         parseImage
@@ -95,16 +102,17 @@ class MarkdownObject {
 
     public getHtml() {
         return this
+            .parseList()
             .parseBlockquote()
             .parseHorizontalRule()
-            .parseHeading()
-            .parseList()
             .parseBoldAndItalic()
+            .parseHeading()
             .parseCode()
             .parseNewLine()
             .parseStrikethrough()
             .parseSubscript()
             .parseSuperscript()
+            .parseEscapeCharacters()
             .text
     }
 }
@@ -113,9 +121,3 @@ export const markdownToHtml = (text: string): string => {
     const markdownObject = new MarkdownObject(text)
     return markdownObject.getHtml()
 }
-
-export const removeMarkdown = (text: string): string =>
-    text
-        .replace(/(?<!\\)_/g, '')
-        .replace(/\n/g, ' ')
-        .replace(/---/g, '')

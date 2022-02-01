@@ -1,7 +1,7 @@
 import { RiDeleteBin6Line, RiDoubleQuotesR } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteEntry } from '../lib/crud'
-import { markdownToHtml, removeMarkdown } from '../lib/markdownHelper'
+import { markdownToHtml } from '../lib/markdownHelper'
 import { fetchEntries, showForm, updateMessage } from '../redux/actions'
 import { RootState } from '../redux/reducer'
 import { EntryData } from '../types/EntryData'
@@ -39,7 +39,7 @@ const Entry = ({entryData}: Props) => {
     })
 
     const handleQuote = () => {
-        const newMessageInForm = `>_${removeMarkdown(message)}_\n${messageInForm}`
+        const newMessageInForm = `${messageInForm}>_${message.replace(/\n/g, '_\n>_')}_\n`
         dispatch(updateMessage(newMessageInForm))
         dispatch(showForm(true))
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -60,6 +60,7 @@ const Entry = ({entryData}: Props) => {
                 className={styles.body}
                 dangerouslySetInnerHTML={{__html: markdownToHtml(message)}}
             />
+            <div>{message.replace(/\n/g, 'ä')}</div>
             <div className={styles.footer}>
                 <div className={styles.timestamp}>{displayedTime}</div>
                 <div className={styles.icons}>
