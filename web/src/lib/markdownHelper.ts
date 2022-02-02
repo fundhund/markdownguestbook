@@ -1,10 +1,13 @@
+const regex = {
+    underscoresInLinksAndImages: /(?<=\[[^\]]*\]\([^)]*)_(?=[^)\n]*\))/gm,
+}
+
 class MarkdownObject {
     constructor(private text: string) {}
 
     private parseBlockquote() {
         const attributes = 'style="border-left: 3px solid lightgray; padding-left: 10px; margin: 0;"'
 
-        // let pattern = '(?<!\\\\)>([^\\n]*)'
         let pattern = '(?<!<[^>]*[^>]|\\\\)>([^\\n]*)'
         let replacement = `<blockquote ${attributes}>$1</blockquote>`
         let re = new RegExp(pattern, 'gm')
@@ -54,8 +57,9 @@ class MarkdownObject {
 
     private parseBoldAndItalic() {
         this.text = this.text
+            .replace(regex.underscoresInLinksAndImages, '\\_')
             .replace(/(?<!\\)__(.*?)(?<!\\)__/gm, '<strong>$1</strong>')
-            .replace(/(?<!\\)_(.*?)(?<!\\)_/gm, '<em>$1</em>')
+            .replace(/(?<!\\)_(?!blank")(.*?)(?<!\\)_(?!blank")/gm, '<em>$1</em>')
             .replace(/(?<!\\)\*\*(.*?)(?<!\\)\*\*/gm, '<strong>$1</strong>')
             .replace(/(?<!\\)\*(.*?)(?<!\\)\*/gm, '<em>$1</em>')
             .replace(/\\_/g, '_')
@@ -96,17 +100,21 @@ class MarkdownObject {
     }
 
     private parseLink() {
-        this.text = this.text.replace(/\[([^\]\n]*)\]\(([^)\n]*)\)/g, '<a href="$2" target="_blank">$1</a>')
+        this.text = this.text
+            .replace(regex.underscoresInLinksAndImages, '\\_')
+            .replace(/(?<!!)\[([^\]\n]*)\]\(([^)\n]*)\)/g, '<a href="$2" target="_blank">$1</a>')
         return this
     }
 
-    /* TODO:
-        parseLink
-        parseImage
-    */
+    private parseImage() {
+        this.text = this.text.replace(/!\[([^\]\n]*)\]\(([^)\n]*)\)/g, '<img src="$2" alt="$1" style="max-width: 100%;"/>')
+        return this
+    }
 
     public getHtml() {
         return this
+            .parseLink()
+            .parseImage()
             .parseList()
             .parseBlockquote()
             .parseHorizontalRule()
@@ -118,7 +126,6 @@ class MarkdownObject {
             .parseSubscript()
             .parseSuperscript()
             .parseEscapeCharacters()
-            .parseLink()
             .text
     }
 }
