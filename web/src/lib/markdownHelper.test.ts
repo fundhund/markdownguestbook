@@ -194,3 +194,9 @@ test('parses link', () => {
     const actual = markdownToHtml('[title](http://www.example.com)')
     expect(actual).toBe(expected)
 })
+
+test('parses image', () => {
+    const expected = '<img src="image_url" alt="alt" style="max-width: 100%;"/>'
+    const actual = markdownToHtml('![alt](image_url)')
+    expect(actual).toBe(expected)
+})
