@@ -1,6 +1,6 @@
 import { Dispatch } from "react"
 import { Action } from "redux"
-import { getEntries } from "../lib/crud"
+import { getEntries } from "../lib/crud.js"
 import { EntryData, isEntryData } from "../types/EntryData"
 
 export const fetchEntries = async (dispatch: Dispatch<Action>) => {
