@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { postEntry } from '../lib/crud.js'
+import { postEntry } from '../lib/crud'
 import {
     addOwnEntry,
     clearForm,

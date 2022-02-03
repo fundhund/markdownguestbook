@@ -1,6 +1,6 @@
 import { RiDeleteBin6Line, RiDoubleQuotesR } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteEntry } from '../lib/crud.js'
+import { deleteEntry } from '../lib/crud'
 import { markdownToHtml } from '../lib/markdownHelper'
 import { fetchEntries, showForm, updateMessage } from '../redux/actions'
 import { RootState } from '../redux/reducer'
