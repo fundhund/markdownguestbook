@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { EntryData } from '../types/EntryData'
 
-const PORT = process.env.PORT ?? 5000
-const BASE_URL = `${process.env.URL ?? 'http://localhost'}:${PORT}`
+const BASE_URL = process.env.REACT_APP_URL ?? 'http://localhost:5000'
 
 const URLS = {
     API_V1: `${BASE_URL}/api/v1`,
