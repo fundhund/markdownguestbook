@@ -1,14 +1,22 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const pool = require('./db.js')
+const pool = require('./database/config.js')
+const path = require('path')
 
-const PORT = 5000
+const PORT = process.env.PORT ?? 5000
 
 app.use(express.json())
 app.use(cors())
 
 app.set('json spaces', 2)
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('build'))
+    app.get('/', (req, _) => {
+        req.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+    })
+}
 
 const hello = async (_, res) => {
 	try {
