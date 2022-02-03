@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const hello = async (_, res) => {
 	try {
-		res.send('<h1>OK</h1>')
+		res.send(`<h1>OK</h1><h2>URL: ${process.env.URL}</h2>`)
 	} catch (err) {
 		console.error(err.message)
 	}
