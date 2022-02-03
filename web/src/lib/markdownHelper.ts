@@ -8,7 +8,7 @@ class MarkdownObject {
     private parseBlockquote() {
         const attributes = 'style="border-left: 3px solid lightgray; padding-left: 10px; margin: 0;"'
 
-        let pattern = '(?<!<[^>]*[^>]|\\\\)>([^\\n]*)'
+        let pattern = '(?<!<[^>]*[^>]|\\\\)> ([^\\n]*)'
         let replacement = `<blockquote ${attributes}>$1</blockquote>`
         let re = new RegExp(pattern, 'gm')
 
@@ -26,9 +26,9 @@ class MarkdownObject {
 
     private parseHorizontalRule() {
         this.text = this.text
-            .replace(/---/g, '<hr />')
-            .replace(/\*\*\*/g, '<hr />')
-            .replace(/___/g, '<hr />')
+            .replace(/^---$/gm, '<hr />')
+            .replace(/^\*\*\*$/gm, '<hr />')
+            .replace(/^___$/gm, '<hr />')
         return this
     }
 
@@ -58,18 +58,12 @@ class MarkdownObject {
     private parseBoldAndItalic() {
         this.text = this.text
             .replace(regex.underscoresInLinksAndImages, '\\_')
-            .replace(/(?<!\\)__(.*?)(?<!\\)__/gm, '<strong>$1</strong>')
+            .replace(/((?<!\\)_){2}([^_].*?)((?<!\\)_){2}/gm, '<strong>$2</strong>')
             .replace(/(?<!\\)_(?!blank")(.*?)(?<!\\)_(?!blank")/gm, '<em>$1</em>')
-            .replace(/(?<!\\)\*\*(.*?)(?<!\\)\*\*/gm, '<strong>$1</strong>')
+            .replace(/((?<!\\)\*){2}([^*].*?)((?<!\\)\*){2}/gm, '<strong>$2</strong>')
             .replace(/(?<!\\)\*(.*?)(?<!\\)\*/gm, '<em>$1</em>')
             .replace(/\\_/g, '_')
             .replace(/\\\*/g, '*')
-        return this
-    }
-
-    private parseCode() {
-        this.text = this.text
-            .replace(/(?<!\\)`(.*?)(?<!\\)`/gm, '<span style="background-color: lightgray; padding: 0 5px;">$1</span>')
         return this
     }
     
@@ -108,6 +102,14 @@ class MarkdownObject {
 
     private parseImage() {
         this.text = this.text.replace(/!\[([^\]\n]*)\]\(([^)\n]*)\)/g, '<img src="$2" alt="$1" style="max-width: 100%;"/>')
+        return this
+    }
+
+    private parseCode() {
+        this.text = this.text
+            .replace(/(?<!\\|`)`(.*?)(?<!\\|`)`/gm, '<span style="background-color: lightgray; padding: 0 5px; font-family: \'Courier New\', monospace;">$1</span>')
+            .replace(/((?<!\\)`){3}\n((.*\n)+)((?<!\\)`){3}/gm, '<div style="background-color: lightgray; padding: 5px; font-family: \'Courier New\', monospace;">$2</div>')
+            .replace(/\\`/g, '`')
         return this
     }
 

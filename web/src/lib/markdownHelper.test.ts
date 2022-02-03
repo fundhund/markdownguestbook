@@ -66,8 +66,8 @@ test('parses escaped asterisks', () => {
     expect(actual).toBe(expected)
 })
 
-test('parses code', () => {
-    const expected = '<span style="background-color: lightgray; padding: 0 5px;">some code</span>'
+test('parses code span', () => {
+    const expected = '<span style="background-color: lightgray; padding: 0 5px; font-family: \'Courier New\', monospace;">some code</span>'
     const actual = markdownToHtml('`some code`')
     expect(actual).toBe(expected)
 })
@@ -138,18 +138,24 @@ test('parses horizontal rule with asterisks', () => {
     expect(actual).toBe(expected)
 })
 
+test('parses bold and italic text', () => {
+    const expected = '<em><strong>bold and italic</strong></em>'
+    const actual = markdownToHtml('***bold and italic***')
+    expect(actual).toBe(expected)
+})
+
 const bqStart = '<blockquote style="border-left: 3px solid lightgray; padding-left: 10px; margin: 0;">'
 const bqEnd = '</blockquote>'
 
 test('parses blockquote', () => {
     const expected = `${bqStart}This is a quote${bqEnd}`
-    const actual = markdownToHtml('>This is a quote')
+    const actual = markdownToHtml('> This is a quote')
     expect(actual).toBe(expected)
 })
 
 test('parses nested blockquote', () => {
     const expected = `${bqStart}one${bqEnd}${bqStart.repeat(2)}two${bqEnd.repeat(2)}${bqStart.repeat(3)}three${bqEnd.repeat(3)}`
-    const actual = markdownToHtml('>one\n>>two\n>>>three')
+    const actual = markdownToHtml('> one\n> > two\n> > > three')
     expect(actual).toBe(expected)
 })
 
@@ -198,5 +204,11 @@ test('parses link', () => {
 test('parses image', () => {
     const expected = '<img src="image_url" alt="alt" style="max-width: 100%;"/>'
     const actual = markdownToHtml('![alt](image_url)')
+    expect(actual).toBe(expected)
+})
+
+test('parses code block', () => {
+    const expected = '<div style="background-color: lightgray; padding: 5px; font-family: \'Courier New\', monospace;">some<br />code<br />block<br /></div>'
+    const actual = markdownToHtml('```\nsome\ncode\nblock\n```')
     expect(actual).toBe(expected)
 })
