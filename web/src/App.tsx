@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { useState } from 'react';
 import './App.css';
 import EntryForm from './components/EntryForm';
 import EntryList from './components/EntryList';
