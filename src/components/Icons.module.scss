@@ -11,11 +11,16 @@
         flex-direction: row;
         justify-content: center;
 
-        * {
-            max-height: 50px;
+        a {
+            max-width: 16%;
 
             &:not(:first-child) {
                 margin-left: 30px;
+            }
+
+            img {
+                max-height: 50px;
+                max-width: 100%;
             }
         }
     }
