@@ -1,4 +1,4 @@
-import { markdownToHtml } from './markdownHelper'
+import { markdownToHtml, removeHtml } from './markdownHelper'
 
 test('adds line breaks', () => {
     const expected = 'first line<br />second line'
@@ -210,5 +210,23 @@ test('parses image', () => {
 test('parses code block', () => {
     const expected = '<div style="background-color: lightgray; padding: 5px; font-family: \'Courier New\', monospace;">some<br />code<br />block<br /></div>'
     const actual = markdownToHtml('```\nsome\ncode\nblock\n```')
+    expect(actual).toBe(expected)
+})
+
+test('removes HTML', () => {
+    const expected = 'lorem ipsum'
+    const actual = removeHtml('<b>lorem ipsum</b>')
+    expect(actual).toBe(expected)
+})
+
+test('removes nested HTML', () => {
+    const expected = 'lorem ipsum'
+    const actual = removeHtml('<b><i>lorem ipsum</i></b>')
+    expect(actual).toBe(expected)
+})
+
+test('removes HTML with attributes', () => {
+    const expected = ''
+    const actual = removeHtml('<img src="http://example.com" alt="alt" />')
     expect(actual).toBe(expected)
 })

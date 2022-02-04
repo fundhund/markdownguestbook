@@ -133,6 +133,8 @@ class MarkdownObject {
 }
 
 export const markdownToHtml = (text: string): string => {
-    const markdownObject = new MarkdownObject(text)
+    const markdownObject = new MarkdownObject(removeHtml(text))
     return markdownObject.getHtml()
 }
+
+export const removeHtml = (text: string): string => text.replace(/<\/?\w+[^>]*>/g, '')
