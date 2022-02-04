@@ -26,7 +26,7 @@ const EntryForm = () => {
             setisSubmitDisabled(true)
         } else {
             // the more entries have been created in this session, the longer the submit button remains disabled.
-            const delay = Math.pow(2, ownEntries.length) * 1000
+            const delay = Math.pow(2, ownEntries.length) * 500
             setTimeout(() => { setisSubmitDisabled(false) }, delay)
         }
     }, [name, message, ownEntries])
