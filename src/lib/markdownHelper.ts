@@ -1,5 +1,6 @@
 const regex = {
     underscoresInLinksAndImages: /(?<=\[[^\]]*\]\([^)]*)_(?=[^)\n]*\))/gm,
+    htmlTags: /<\/?\w+[^>]*>/g,
 }
 
 class MarkdownObject {
@@ -137,4 +138,9 @@ export const markdownToHtml = (text: string): string => {
     return markdownObject.getHtml()
 }
 
-export const removeHtml = (text: string): string => text.replace(/<\/?\w+[^>]*>/g, '')
+export const removeHtml = (text: string): string => {
+    while (text.match(regex.htmlTags)) {
+        text = text.replace(regex.htmlTags, '')
+    }
+    return text
+}
