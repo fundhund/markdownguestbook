@@ -3,7 +3,7 @@ import styles from './Button.module.scss'
 type Props = {
 	text: string
 	onclick: () => void
-    color: 'blue' | 'red'
+    color: 'blue' | 'red' | 'orange'
     disabled?: boolean
 }
 

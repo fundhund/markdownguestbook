@@ -39,7 +39,7 @@ const Entry = ({entryData}: Props) => {
     })
 
     const handleQuote = () => {
-        const newMessageInForm = `${messageInForm}> _${message.replace(/\n/g, '_\n> _')}_\n`
+        const newMessageInForm = `${messageInForm && `${messageInForm}\n\n`}> _${message.replace(/\n/g, '_\n> _')}_\n`
         dispatch(updateMessage(newMessageInForm))
         dispatch(showForm(true))
         window.scrollTo({ top: 0, behavior: 'smooth' })

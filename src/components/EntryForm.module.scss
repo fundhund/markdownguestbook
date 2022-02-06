@@ -16,7 +16,9 @@
 
     .formWrapper {
 
-        padding: 20px;
+        @media (min-width: 600px) {
+            padding: 20px;
+        }
 
         .formRow {
             display: flex;
@@ -49,7 +51,11 @@
         .buttonSection {
             display: flex;
             flex-direction: row;
-            justify-content: flex-end;
+            justify-content: flex-start;
+
+            :first-child {
+                margin-right: auto;
+            }
 
             :not(:first-child) {
                 margin-left: 10px;

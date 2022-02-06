@@ -1,0 +1,16 @@
+@import '../scss/colors.scss';
+
+.previewWrapper {
+    @media (min-width: 600px) {
+        padding: 20px;
+    }
+
+    .preview {
+        border: 1px solid $color_darkOrange;
+        border-radius: 5px;
+        box-sizing: border-box;
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 10px 10px;
+    }
+}

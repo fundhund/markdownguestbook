@@ -7,7 +7,7 @@ type EntriesAction = {
 }
 
 type FormAction = {
-    type: 'UPDATE_NAME' | 'UPDATE_MESSAGE' | 'CLEAR_FORM' | 'SHOW_FORM',
+    type: 'UPDATE_NAME' | 'UPDATE_MESSAGE' | 'CLEAR_FORM' | 'SHOW_FORM' | 'SHOW_PREVIEW',
     payload: string | null,
 }
 
@@ -59,6 +59,11 @@ const formReducer = (state = defaultFormState, action: FormAction) => {
             return {
                 ...state,
                 isFormVisible: action?.payload,
+            }
+        case 'SHOW_PREVIEW':
+            return {
+                ...state,
+                isPreviewVisible: action?.payload,
             }
         default:
             return state

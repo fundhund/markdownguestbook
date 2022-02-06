@@ -36,4 +36,16 @@
             background-color: $color_lightRed;
         }
     }
+
+    &.orange {
+        background-color: $color_darkOrange;
+
+        &:disabled {
+            background-color: $color_veryLightOrange;
+        }
+        
+        &:hover:not(:disabled) {
+            background-color: $color_lightOrange;
+        }
+    }
 }

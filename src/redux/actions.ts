@@ -41,6 +41,11 @@ export const showForm = (isFormVisible: boolean) => ({
     payload: isFormVisible,
 })
 
+export const showPreview = (isPreviewVisible: boolean) => ({
+    type: 'SHOW_PREVIEW',
+    payload: isPreviewVisible,
+})
+
 export const addOwnEntry = (id: string) => ({
     type: 'ADD_OWN_ENTRY_ID',
     payload: id,

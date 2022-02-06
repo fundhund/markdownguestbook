@@ -5,6 +5,7 @@ import {
     addOwnEntry,
     clearForm,
     fetchEntries, showForm,
+    showPreview,
     updateMessage,
     updateName
 } from '../redux/actions'
@@ -18,7 +19,12 @@ const EntryForm = () => {
     const [success, setSuccess] = useState<boolean | null>(null)
     const [isSubmitDisabled, setisSubmitDisabled] = useState<boolean>(true)
 
-    const {name, message, isFormVisible} = useSelector((state: RootState) => state.form)
+    const {
+        name,
+        message,
+        isFormVisible,
+        isPreviewVisible,
+    } = useSelector((state: RootState) => state.form)
     const { ownEntries } = useSelector((state: RootState) => state.user)
 
     useEffect(() => {
@@ -38,6 +44,7 @@ const EntryForm = () => {
             const { id } = await postEntry(name, message)
 
             dispatch(showForm(false))
+            dispatch(showPreview(false))
             if (id !== undefined) {
                 dispatch(addOwnEntry(id))
             }
@@ -74,7 +81,6 @@ const EntryForm = () => {
 
             {isFormVisible && (
                 <div className={styles.formWrapper}>
-
                     <div className={styles.formRow}>
                         <label htmlFor="name">Name</label>
                         <input
@@ -98,9 +104,18 @@ const EntryForm = () => {
 
                     <div className={styles.buttonSection}>
                         <Button
+                            text={isPreviewVisible ? 'Close' : 'Preview'}
+                            onclick={() => {
+                                dispatch(showPreview(!isPreviewVisible))
+                            }}
+                            color="orange"
+                            disabled={!message}
+                        />
+                        <Button
                             text="Cancel"
                             onclick={() => {
                                 dispatch(showForm(false))
+                                dispatch(showPreview(false))
                                 dispatch(clearForm())
                             }}
                             color="red"
